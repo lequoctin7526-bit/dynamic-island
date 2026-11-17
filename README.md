@@ -1,26 +1,32 @@
-# Dynamic Island Pro – Liquid Glass for Windhawk (v1.1.0)
+# Dynamic Island Pro – Liquid Glass for Windhawk (v1.2.0)
 
 ![Dynamic Island Pro](https://raw.githubusercontent.com/devcode90/Dynamic-Island-for-Windows/793cf954d51aa9748c39d544187fab6e25ecd0fb/previews/desktop.png)
 
-Dynamic Island Pro mang đến giao diện **Dynamic Island** phong cách **Liquid Glass** cao cấp cho Windows 10 và Windows 11 dưới dạng một mod gốc chạy trực tiếp bên trong [Windhawk](https://windhawk.net/).
+Dynamic Island Pro tái hiện chuẩn xác trải nghiệm **Apple Dynamic Island** nguyên bản từ iPhone kết hợp cùng phong cách khúc xạ kính **Liquid Glass** cao cấp cho Windows 10 và Windows 11 dưới dạng mod native chạy trực tiếp bên trong [Windhawk](https://windhawk.net/).
 
-## ✨ Tính Năng Nổi Bật (Version 1.1.0)
+## ✨ Thiết Kế Chuẩn Apple Dynamic Island (Version 1.2.0)
 
-- **Liquid Glass Reflection:** Vòm phản chiếu specular sheen chân thực, viền kính 1px specular rim light, và đổ bóng đa lớp mềm mại. Hỗ trợ 4 phong cách: Liquid Glass, Obsidian Dark, Frosted Acrylic và Porcelain Light.
-- **Spring Physics Animation:** Chuyển động đàn hồi siêu mượt, tự động thay đổi chiều cao thông minh theo nội dung từng Tab, tự động dừng render hoàn toàn khi ở trạng thái nghỉ (Zero Idle CPU – 0.0%).
-- **Music Player & Vinyl Disc:** Tự động nhận diện bài hát (Spotify, YouTube, Apple Music, Media Player,...), đĩa than Vinyl xoay tròn tinh tế, dàn sóng nhạc Equalizer 6 cột, thanh tiến trình bài hát thời gian thực và các nút điều khiển trực tiếp (`⏮`, `⏯`, `⏭`).
-- **Clipboard Preview (Bộ Nhớ Tạm):** Tích hợp listener Windows native, tự động bung Island hiển thị xem trước khi người dùng sao chép văn bản, tệp hoặc hình ảnh (Ctrl+C).
-- **Downloads Tracker (Tiến Trình Tải Xuống):** Tự động phát hiện khi trình duyệt (Chrome, Edge, Firefox,...) đang tải file và thông báo ngay khi tải xong.
-- **Battery & Charging Telemetry:** Tự động thông báo khi cắm sạc (kèm tia sét ⚡) hoặc ngắt sạc, cảnh báo khi pin yếu dưới 20%.
-- **Bảng Theo Dõi Hệ Thống:** Giám sát trực tiếp CPU, RAM và thời lượng Pin với thiết kế thẻ kính hiện đại.
-- **Low Performance Mode:** Tối ưu hóa cho máy cấu hình thấp hoặc laptop tiết kiệm pin.
+- **Compact Mode Siêu Tối Giản:** Viên thuốc đen tuyền bo tròn hoàn hảo ở đỉnh màn hình, loại bỏ hoàn toàn các thanh tab hay nút đóng thô kệch. Khi phát nhạc, hiển thị mini artwork bên trái và sóng equalizer 3 vạch nhảy nhịp nhàng bên phải. Khi sạc pin, hiển thị biểu tượng tia sét ⚡ và % pin.
+- **Expanded Music Player (iPhone Style):** 
+  - Bên trái: Album artwork hình vuông bo góc mềm 12px cùng hiệu ứng đĩa than tinh xảo.
+  - Ở giữa: Tên bài hát đậm nét, tên nghệ sĩ thanh tú (tự động cắt ellipsis).
+  - Bên phải: Cụm sóng âm Music Visualizer chuyển động sống động.
+  - Phía dưới: Thanh thời gian (Progress Bar) siêu mảnh, nhãn thời lượng thực (`01:24 / 03:45`) cùng bộ nút điều khiển tối giản không viền hộp (`⏮`, `⏯`, `⏭`).
+- **Context-Aware Dynamic Activities (Không Tab, Không Dashboard):**
+  - Tự động thay đổi layout theo ngữ cảnh sự kiện đang diễn ra:
+    - **Music:** Trình phát nhạc cao cấp đầy đủ điều khiển.
+    - **Clipboard:** Tự bung xem trước nội dung khi nhấn Ctrl+C (văn bản, tệp, ảnh) và tự thu gọn sau 3s.
+    - **Downloads:** Nhận diện trình duyệt tải tệp và thông báo khi hoàn tất.
+    - **Battery:** Hiệu ứng cắm sạc pin và cảnh báo pin yếu < 20%.
+- **Liquid Glass Reflection:** Nền Obsidian đen sâu bán trong suốt kết hợp DWM Acrylic Blur, vòm phản chiếu Specular Glare chân thực, viền kính 1px Specular Rim Light tinh tế, đổ bóng mềm nhiều lớp. Hỗ trợ 4 phong cách: Liquid Glass, Obsidian Dark, Frosted Acrylic và Porcelain Light.
+- **Spring Physics Animation & Zero CPU:** Co giãn mượt mà theo vật lý lò xo, tự ngắt hoàn toàn timer khi về trạng thái nghỉ (Zero Idle CPU – 0.0%), hỗ trợ Windows Reduce Motion.
 
 ## 🚀 Hướng Dẫn Cài Đặt Trong Windhawk
 
-1. Cài đặt và mở **Windhawk**.
-2. Nhấn vào biểu tượng menu hoặc click **"Create a Mod"**.
+1. Mở **Windhawk**.
+2. Nhấn vào biểu tượng menu hoặc click **"Create a Mod"** (hoặc mở mod đã tạo).
 3. Sao chép toàn bộ mã nguồn trong tệp `dynamic-island-pro.wh.cpp` và dán vào trình soạn thảo của Windhawk.
-4. Nhấn **Compile** (`Ctrl + S`), sau đó chọn **Save**.
+4. Nhấn **Compile** (`Ctrl + S` hoặc `Ctrl + B`), sau đó nhấn **Save**.
 5. Bật công tắc sang **Enabled** để trải nghiệm.
 
 ## 🛠 Công Nghệ Sử Dụng
