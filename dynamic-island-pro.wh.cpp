@@ -1,51 +1,63 @@
 // ==WindhawkMod==
 // @id              dynamic-island-pro
 // @name            Dynamic Island Pro – Liquid Glass
-// @description     A high-performance, fluid Dynamic Island with Liquid Glass effects, media playback controls, system telemetry, and notifications for Windows 10/11.
-// @version         1.0.0
+// @description     A high-performance, fluid Dynamic Island with Liquid Glass effects, media playback controls, downloads, clipboard previews, battery telemetry, and notifications for Windows 10/11.
+// @version         1.1.0
 // @author          Le Quoc Tin
 // @github          https://github.com/lequoctin7526-bit/dynamic-island.git
 // @include         explorer.exe
-// @compilerOptions -ld2d1 -ldwrite -ldwmapi -lole32 -lshcore -lgdi32 -luser32
+// @compilerOptions -ld2d1 -ldwrite -ldwmapi -lole32 -lshcore -lgdi32 -luser32 -lshell32
 // ==/WindhawkMod==
 
 // ==WindhawkModReadme==
 /*
 # Dynamic Island Pro – Liquid Glass for Windows 10/11
 
-Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Apple lên máy tính Windows 10 và Windows 11 của bạn, được xây dựng hoàn toàn từ Win32 API, Direct2D phần cứng và DWM Liquid Glass.
+Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Apple lên máy tính Windows 10 và Windows 11 của bạn, được xây dựng hoàn toàn từ Win32 API gốc, Direct2D phần cứng và DWM Liquid Glass.
 
 ---
 
-### ✨ Tính Năng Nổi Bật
+### ✨ Tính Năng Nổi Bật (Version 1.1.0)
 
 1. **Hiệu Ứng Liquid Glass (Kính Thủy Tinh Khúc Xạ Ánh Sáng):**
    - Vòm phản chiếu specular glare chân thực.
    - Viền khúc xạ ánh sáng Specular Rim Light 1px sắc sảo.
    - Đổ bóng đa lớp mềm mại (Ambient Layered Drop Shadows).
    - Tự động fallback sang Acrylic hoặc Dark Glass khi chạy trên máy không bật hiệu ứng trong suốt.
+   - Hỗ trợ 4 phong cách: Liquid Glass, Obsidian Dark, Frosted Acrylic và Porcelain Light.
 
 2. **Chuyển Động Lò Xo Siêu Mượt (Spring-Damped Physics):**
+   - Tự động điều chỉnh kích thước theo nội dung (Dynamic Content Height).
    - Không giật hình, không lag.
    - Tự ngắt hoàn toàn Timer khi về trạng thái nghỉ (Zero Idle CPU - 0.0%).
    - Tương thích với cài đặt Windows Reduce Motion.
 
-3. **Trình Điều Khiển Media Thông Minh:**
+3. **Trình Điều Khiển Media Thông Minh & Đĩa Than Vinyl:**
    - Tự động nhận diện bài hát và ứng dụng đang phát nhạc (Spotify, Chrome, YouTube, Apple Music, Media Player,...).
+   - Đĩa nhạc Vinyl xoay tròn tinh tế với các đường vân phản chiếu ánh sáng.
+   - Dàn sóng nhạc Equalizer 6 cột hoạt hình mượt mà.
+   - Thanh tiến trình phát nhạc và thời gian bài hát.
    - Nút điều khiển tương tác trực tiếp: Bài trước (⏮), Phát/Dừng (⏯), Bài tiếp (⏭).
-   - Biểu tượng sóng nhạc Equalizer hoạt hình ở chế độ Compact.
 
-4. **Bảng Theo Dõi Hệ Thống (System Telemetry):**
-   - CPU Usage, RAM Usage, Pin (Battery %).
+4. **Theo Dõi Clipboard (Bộ Nhớ Tạm):**
+   - Tự động bung Island xem trước khi bạn nhấn Ctrl+C văn bản, tệp hoặc hình ảnh.
+   - Chỉ đọc tức thì để hiển thị, không lưu trữ dữ liệu trái phép.
+
+5. **Theo Dõi Tiến Trình Tải Xuống (Downloads Tracker):**
+   - Tự động nhận diện khi trình duyệt (Chrome, Edge, Firefox,...) đang tải file.
+   - Hiển thị tên tệp và thông báo khi tải xuống hoàn tất.
+
+6. **Giám Sát Pin & Hiệu Ứng Sạc:**
+   - Tự động bung Island khi cắm sạc (kèm tia sét ⚡) hoặc khi ngắt sạc.
+   - Cảnh báo pin yếu khi dưới 20%.
+
+7. **Bảng Theo Dõi Hệ Thống (CPU/RAM/Pin):**
+   - Thẻ hiển thị chỉ số trực quan kèm thanh đo màu sắc.
    - Chỉ cập nhật khi mở rộng, tiết kiệm tối đa tài nguyên máy.
 
-5. **Trung Tâm Thông Báo (Alerts & Notifications):**
-   - Tự bung ra khi có thông báo hệ thống hoặc cảnh báo pin.
-   - Tự động thu gọn sau thời gian định sẵn.
-
-6. **Chế Độ Tối Ưu Máy Yếu (Low Performance Mode):**
+8. **Chế Độ Tối Ưu Máy Yếu (Low Performance Mode):**
    - Tối giản số bước đổ bóng và hiệu ứng phức tạp.
-   - Tiêu hao RAM cực thấp (< 30 MB), CPU nhàn rỗi gần 0%.
+   - Tiêu hao RAM cực thấp (< 35 MB), CPU nhàn rỗi gần 0%.
 */
 // ==/WindhawkModReadme==
 
@@ -61,6 +73,7 @@ Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Appl
     - '0': "Dark Obsidian (Kính tối cổ điển)"
     - '1': "Liquid Glass (Kính lỏng phản xạ cao cấp)"
     - '2': "Frosted Acrylic (Kính mờ Fluent)"
+    - '3': "Porcelain Light (Kính trong suốt sáng)"
 - enable_animations: true
   $name: "Bật hoạt ảnh chuyển động"
   $description: "Cho phép Dynamic Island co giãn mượt mà."
@@ -76,6 +89,15 @@ Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Appl
 - enable_notifications: true
   $name: "Bật Thông báo"
   $description: "Tự động bung Island khi có sự kiện thông báo."
+- enable_clipboard: true
+  $name: "Bật Theo dõi Clipboard"
+  $description: "Tự động bung xem trước khi bạn sao chép văn bản, tệp hoặc hình ảnh (Ctrl+C)."
+- enable_battery_alerts: true
+  $name: "Bật Cảnh báo & Trạng thái Pin"
+  $description: "Bật hiệu ứng thông báo khi cắm sạc, ngắt sạc hoặc cảnh báo khi pin yếu dưới 20%."
+- enable_downloads: true
+  $name: "Bật Theo dõi Tải xuống (Downloads)"
+  $description: "Tự động phát hiện và hiển thị tiến trình khi trình duyệt đang tải tệp hoặc tải xong."
 - compact_width: 160
   $name: "Chiều rộng Compact (px)"
   $description: "Độ rộng mặc định khi ở dạng viên thuốc (từ 140 đến 200px)."
@@ -85,9 +107,9 @@ Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Appl
 - expanded_width: 440
   $name: "Chiều rộng Expanded (px)"
   $description: "Độ rộng khi mở rộng (từ 380 đến 520px)."
-- expanded_height: 150
+- expanded_height: 155
   $name: "Chiều cao Expanded (px)"
-  $description: "Độ cao khi mở rộng (từ 130 đến 180px)."
+  $description: "Độ cao khi mở rộng (từ 130 đến 190px)."
 - offset_y: 12
   $name: "Khoảng cách từ đỉnh màn hình (px)"
   $description: "Khoảng cách từ mép trên màn hình xuống Dynamic Island."
@@ -118,6 +140,7 @@ Dynamic Island Pro mang đến trải nghiệm Dynamic Island đẳng cấp Appl
 #pragma comment(lib, "shcore.lib")
 #pragma comment(lib, "gdi32.lib")
 #pragma comment(lib, "user32.lib")
+#pragma comment(lib, "shell32.lib")
 
 // DWM Accent composition definitions for blur/acrylic
 typedef enum _ACCENT_STATE {
@@ -149,16 +172,19 @@ typedef BOOL(WINAPI* pfnSetWindowCompositionAttribute)(HWND, WINDOWCOMPOSITIONAT
 // ─────────────────────────────────────────────────────────────────────────────
 struct ModSettings {
     bool enableIsland = true;
-    int glassStyle = 1; // 0 = Dark, 1 = Liquid Glass, 2 = Acrylic
+    int glassStyle = 1; // 0 = Dark, 1 = Liquid Glass, 2 = Acrylic, 3 = Porcelain Light
     bool enableAnimations = true;
     bool lowPerfMode = false;
     bool enableMusic = true;
     bool enableSysMon = true;
     bool enableNotifications = true;
+    bool enableClipboard = true;
+    bool enableBatteryAlerts = true;
+    bool enableDownloads = true;
     int compactWidth = 160;
     int compactHeight = 38;
     int expandedWidth = 440;
-    int expandedHeight = 150;
+    int expandedHeight = 155;
     int offsetY = 12;
     int autoCollapseSec = 4;
     float transparency = 0.88f;
@@ -175,7 +201,8 @@ enum class IslandState {
 enum class ActiveTab {
     Music = 0,
     System = 1,
-    Alerts = 2
+    Downloads = 2,
+    Alerts = 3
 };
 
 struct SystemTelemetry {
@@ -190,9 +217,12 @@ struct SystemTelemetry {
 
 struct MusicInfo {
     bool isPlaying = false;
-    std::wstring title = L"Sẵn sàng phát nhạc";
-    std::wstring artist = L"Windows Media Session";
-    float progress = 0.45f;
+    std::wstring title = L"Dynamic Island Music";
+    std::wstring artist = L"Sẵn sàng phát nhạc";
+    float progress = 0.35f;
+    float elapsedSeconds = 65.0f;
+    float totalSeconds = 210.0f;
+    float vinylRotation = 0.0f;
 };
 
 struct NotificationData {
@@ -200,6 +230,12 @@ struct NotificationData {
     std::wstring title = L"";
     std::wstring body = L"";
     DWORD expireTick = 0;
+};
+
+struct DownloadInfo {
+    bool isDownloading = false;
+    std::wstring fileName = L"";
+    ULONGLONG fileSize = 0;
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -227,16 +263,22 @@ static float g_velHeight = 0.0f;
 static float g_velContentAlpha = 0.0f;
 static bool g_isAnimating = false;
 
-// Telemetry & Media caches
+// Telemetry, Media, Clipboard & Download states
 static SystemTelemetry g_telemetry;
 static MusicInfo g_musicInfo;
 static NotificationData g_activeAlert;
+static DownloadInfo g_downloadInfo;
+static std::wstring g_lastClipboardText = L"";
+static bool g_prevHasBattery = false;
+static bool g_prevCharging = false;
+static bool g_lowBatteryAlerted = false;
+
 static FILETIME g_prevIdleTime = {0, 0};
 static FILETIME g_prevKernelTime = {0, 0};
 static FILETIME g_prevUserTime = {0, 0};
 static ULONGLONG g_lastTelemetryTick = 0;
 static ULONGLONG g_lastMediaCheckTick = 0;
-static ULONGLONG g_lastCollapseCheckTick = 0;
+static ULONGLONG g_lastDownloadCheckTick = 0;
 static DWORD g_mouseLeaveCollapseTimer = 0;
 
 // Direct2D & DirectWrite Interfaces
@@ -269,6 +311,7 @@ static void RenderIsland(HWND hWnd);
 static void StepPhysicsAnimation(float dt);
 static void UpdateSystemTelemetry();
 static void UpdateMediaSession();
+static void UpdateDownloadsCheck();
 static void TriggerNotification(const std::wstring& title, const std::wstring& body, DWORD durationSec);
 static void ApplyBlurBackdrop(HWND hWnd, int style);
 
@@ -282,6 +325,15 @@ static ULONGLONG SubtractTimes(const FILETIME& ftA, const FILETIME& ftB) {
     b.LowPart = ftB.dwLowDateTime;
     b.HighPart = ftB.dwHighDateTime;
     return (a.QuadPart > b.QuadPart) ? (a.QuadPart - b.QuadPart) : 0;
+}
+
+static std::wstring FormatTimeString(float totalSeconds) {
+    int total = (int)totalSeconds;
+    int mins = total / 60;
+    int secs = total % 60;
+    wchar_t buf[16];
+    swprintf_s(buf, L"%02d:%02d", mins, secs);
+    return std::wstring(buf);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -300,13 +352,17 @@ static void ApplyBlurBackdrop(HWND hWnd, int style) {
         ACCENT_POLICY accent = { ACCENT_DISABLED, 0, 0, 0 };
         if (style == 1) { // Liquid Glass
             accent.AccentState = ACCENT_ENABLE_BLURBEHIND;
-            accent.AccentFlags = 2; // Draw border / glow if available
-            accent.GradientColor = 0x1A000000; // subtle deep tint
-        } else if (style == 2) { // Acrylic
+            accent.AccentFlags = 2; // Specular border
+            accent.GradientColor = 0x18000000;
+        } else if (style == 2) { // Frosted Acrylic
             accent.AccentState = ACCENT_ENABLE_ACRYLICBLURBEHIND;
             accent.AccentFlags = 0;
             accent.GradientColor = 0x30181818;
-        } else {
+        } else if (style == 3) { // Porcelain Light
+            accent.AccentState = ACCENT_ENABLE_BLURBEHIND;
+            accent.AccentFlags = 2;
+            accent.GradientColor = 0x20FFFFFF;
+        } else { // Dark Obsidian
             accent.AccentState = ACCENT_ENABLE_TRANSPARENTGRADIENT;
             accent.GradientColor = 0x99101014;
         }
@@ -330,6 +386,9 @@ static void LoadModSettings() {
     g_settings.enableMusic = Wh_GetIntSetting(L"enable_music_player") != 0;
     g_settings.enableSysMon = Wh_GetIntSetting(L"enable_system_monitor") != 0;
     g_settings.enableNotifications = Wh_GetIntSetting(L"enable_notifications") != 0;
+    g_settings.enableClipboard = Wh_GetIntSetting(L"enable_clipboard") != 0;
+    g_settings.enableBatteryAlerts = Wh_GetIntSetting(L"enable_battery_alerts") != 0;
+    g_settings.enableDownloads = Wh_GetIntSetting(L"enable_downloads") != 0;
 
     int cw = Wh_GetIntSetting(L"compact_width");
     g_settings.compactWidth = (cw >= 120 && cw <= 260) ? cw : 160;
@@ -341,7 +400,7 @@ static void LoadModSettings() {
     g_settings.expandedWidth = (ew >= 320 && ew <= 650) ? ew : 440;
 
     int eh = Wh_GetIntSetting(L"expanded_height");
-    g_settings.expandedHeight = (eh >= 100 && eh <= 250) ? eh : 150;
+    g_settings.expandedHeight = (eh >= 100 && eh <= 250) ? eh : 155;
 
     int oy = Wh_GetIntSetting(L"offset_y");
     g_settings.offsetY = (oy >= 0 && oy <= 100) ? oy : 12;
@@ -355,6 +414,54 @@ static void LoadModSettings() {
     if (g_hIslandWnd) {
         ApplyBlurBackdrop(g_hIslandWnd, g_settings.glassStyle);
         PostMessageW(g_hIslandWnd, WM_USER + 101, 0, 0); // Request repaint
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DOWNLOADS TRACKER
+// ─────────────────────────────────────────────────────────────────────────────
+static void UpdateDownloadsCheck() {
+    if (!g_settings.enableDownloads) return;
+
+    WCHAR userProfile[MAX_PATH];
+    if (!GetEnvironmentVariableW(L"USERPROFILE", userProfile, MAX_PATH)) return;
+
+    std::wstring downloadsPath = std::wstring(userProfile) + L"\\Downloads\\";
+    std::wstring pattern = downloadsPath + L"*.crdownload";
+
+    WIN32_FIND_DATAW fd;
+    HANDLE hFind = FindFirstFileW(pattern.c_str(), &fd);
+    if (hFind == INVALID_HANDLE_VALUE) {
+        pattern = downloadsPath + L"*.part";
+        hFind = FindFirstFileW(pattern.c_str(), &fd);
+    }
+
+    if (hFind != INVALID_HANDLE_VALUE) {
+        std::wstring rawName = fd.cFileName;
+        FindClose(hFind);
+
+        size_t dotPos = rawName.rfind(L".");
+        std::wstring cleanName = (dotPos != std::wstring::npos) ? rawName.substr(0, dotPos) : rawName;
+
+        ULARGE_INTEGER sz;
+        sz.LowPart = fd.nFileSizeLow;
+        sz.HighPart = fd.nFileSizeHigh;
+
+        if (!g_downloadInfo.isDownloading || g_downloadInfo.fileName != cleanName) {
+            g_downloadInfo.isDownloading = true;
+            g_downloadInfo.fileName = cleanName;
+            g_downloadInfo.fileSize = sz.QuadPart;
+            TriggerNotification(L"Đang tải tệp xuống 📥", cleanName, 3);
+        } else {
+            g_downloadInfo.fileSize = sz.QuadPart;
+        }
+    } else {
+        if (g_downloadInfo.isDownloading) {
+            std::wstring finishedName = g_downloadInfo.fileName;
+            g_downloadInfo.isDownloading = false;
+            g_downloadInfo.fileName = L"";
+            TriggerNotification(L"Tải xuống hoàn tất ✅", finishedName, 4);
+        }
     }
 }
 
@@ -378,7 +485,6 @@ static BOOL CALLBACK EnumWindowsMediaProc(HWND hwnd, LPARAM lParam) {
             std::wstring procName = imagePath;
             std::transform(procName.begin(), procName.end(), procName.begin(), ::towlower);
 
-            // Check known music/video players
             if (procName.find(L"spotify.exe") != std::wstring::npos) {
                 if (wcscmp(title, L"Spotify") != 0 && wcscmp(title, L"Spotify Free") != 0 && wcscmp(title, L"Spotify Premium") != 0) {
                     MusicInfo* pInfo = (MusicInfo*)lParam;
@@ -393,7 +499,7 @@ static BOOL CALLBACK EnumWindowsMediaProc(HWND hwnd, LPARAM lParam) {
                         pInfo->artist = L"Spotify";
                     }
                     CloseHandle(hProc);
-                    return FALSE; // found active track
+                    return FALSE;
                 }
             } else if (procName.find(L"music.exe") != std::wstring::npos ||
                        procName.find(L"aimp.exe") != std::wstring::npos ||
@@ -422,10 +528,9 @@ static void UpdateMediaSession() {
         g_musicInfo.title = fresh.title;
         g_musicInfo.artist = fresh.artist;
     } else {
-        // Fallback default state
         g_musicInfo.isPlaying = false;
         g_musicInfo.title = L"Dynamic Island Music";
-        g_musicInfo.artist = L"Ready to Play";
+        g_musicInfo.artist = L"Sẵn sàng phát nhạc";
     }
 }
 
@@ -447,7 +552,7 @@ static void UpdateSystemTelemetry() {
         g_telemetry.ramUsedMB = (int)((memInfo.ullTotalPhys - memInfo.ullAvailPhys) / (1024 * 1024));
     }
 
-    // 2. Battery Status
+    // 2. Battery Status & Charging Alerts
     SYSTEM_POWER_STATUS power;
     if (GetSystemPowerStatus(&power)) {
         if (power.BatteryLifePercent != 255) {
@@ -458,6 +563,24 @@ static void UpdateSystemTelemetry() {
             g_telemetry.hasBattery = false;
             g_telemetry.batteryPercent = 100;
             g_telemetry.isCharging = true;
+        }
+
+        if (g_settings.enableBatteryAlerts && g_telemetry.hasBattery) {
+            if (g_prevHasBattery) {
+                if (!g_prevCharging && g_telemetry.isCharging) {
+                    TriggerNotification(L"Đang sạc pin ⚡", L"Bộ sạc đã kết nối (" + std::to_wstring(g_telemetry.batteryPercent) + L"%)", 3);
+                } else if (g_prevCharging && !g_telemetry.isCharging) {
+                    TriggerNotification(L"Đã ngắt sạc pin 🔋", L"Đang dùng nguồn pin (" + std::to_wstring(g_telemetry.batteryPercent) + L"%)", 3);
+                } else if (!g_telemetry.isCharging && g_telemetry.batteryPercent <= 20 && !g_lowBatteryAlerted) {
+                    g_lowBatteryAlerted = true;
+                    TriggerNotification(L"Cảnh báo pin yếu ⚠️", L"Thời lượng pin còn " + std::to_wstring(g_telemetry.batteryPercent) + L"%, hãy cắm sạc!", 5);
+                }
+                if (g_telemetry.isCharging || g_telemetry.batteryPercent > 25) {
+                    g_lowBatteryAlerted = false;
+                }
+            }
+            g_prevCharging = g_telemetry.isCharging;
+            g_prevHasBattery = true;
         }
     }
 
@@ -493,7 +616,6 @@ static void TriggerNotification(const std::wstring& title, const std::wstring& b
     g_activeAlert.body = body;
     g_activeAlert.expireTick = GetTickCount() + (durationSec * 1000);
 
-    // Expand island to alert tab
     g_activeTab = ActiveTab::Alerts;
     g_currentState = IslandState::Expanded;
     g_isAnimating = true;
@@ -554,7 +676,6 @@ static void InitD2DResources(HWND hWnd) {
                 13.0f, L"en-us", &g_pTextFormatIcon
             );
             if (!g_pTextFormatIcon) {
-                // Fallback to Segoe MDL2 Assets
                 g_pDWriteFactory->CreateTextFormat(
                     L"Segoe MDL2 Assets", NULL,
                     DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL,
@@ -573,12 +694,11 @@ static void EnsureBackbuffer(int width, int height) {
     if (width <= 0) width = 100;
     if (height <= 0) height = 100;
 
-    // Pad buffer to avoid reallocations
     width = (width + 63) & ~63;
     height = (height + 63) & ~63;
 
     if (g_hMemDC && g_bmpWidth >= width && g_bmpHeight >= height && g_pDCRenderTarget) {
-        return; // existing buffer is sufficient
+        return;
     }
 
     if (g_pDCRenderTarget) {
@@ -603,7 +723,7 @@ static void EnsureBackbuffer(int width, int height) {
     BITMAPINFO bmi = {0};
     bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
     bmi.bmiHeader.biWidth = width;
-    bmi.bmiHeader.biHeight = -height; // top-down
+    bmi.bmiHeader.biHeight = -height;
     bmi.bmiHeader.biPlanes = 1;
     bmi.bmiHeader.biBitCount = 32;
     bmi.bmiHeader.biCompression = BI_RGB;
@@ -648,13 +768,21 @@ static void CleanupD2DResources() {
 // ─────────────────────────────────────────────────────────────────────────────
 static void StepPhysicsAnimation(float dt) {
     if (dt <= 0.0f) dt = 0.016f;
-    if (dt > 0.05f) dt = 0.05f; // clamp delta time for stability
+    if (dt > 0.05f) dt = 0.05f;
 
     BOOL animEnabled = g_settings.enableAnimations;
     SystemParametersInfoW(SPI_GETCLIENTAREAANIMATION, 0, &animEnabled, 0);
 
     float targetW = (g_currentState == IslandState::Expanded) ? (float)g_settings.expandedWidth : (float)g_settings.compactWidth;
-    float targetH = (g_currentState == IslandState::Expanded) ? (float)g_settings.expandedHeight : (float)g_settings.compactHeight;
+    float targetH = (float)g_settings.compactHeight;
+
+    if (g_currentState == IslandState::Expanded) {
+        if (g_activeTab == ActiveTab::Music) targetH = (float)g_settings.expandedHeight;
+        else if (g_activeTab == ActiveTab::System) targetH = 145.0f;
+        else if (g_activeTab == ActiveTab::Downloads) targetH = 138.0f;
+        else targetH = 135.0f;
+    }
+
     float targetR = (g_currentState == IslandState::Expanded) ? 22.0f : (targetH * 0.5f);
     float targetAlpha = (g_currentState == IslandState::Expanded) ? 1.0f : 0.0f;
     float targetHover = g_bIsHovered ? 1.0f : 0.0f;
@@ -672,39 +800,38 @@ static void StepPhysicsAnimation(float dt) {
         return;
     }
 
-    // Critically-damped spring constants
-    const float springK = g_settings.lowPerfMode ? 140.0f : 190.0f;
-    const float dampingD = g_settings.lowPerfMode ? 19.0f : 24.0f;
+    const float springK = g_settings.lowPerfMode ? 140.0f : 185.0f;
+    const float dampingD = g_settings.lowPerfMode ? 19.0f : 23.0f;
 
-    // Width spring step
     float forceW = -springK * (g_curWidth - targetW) - dampingD * g_velWidth;
     g_velWidth += forceW * dt;
     g_curWidth += g_velWidth * dt;
 
-    // Height spring step
     float forceH = -springK * (g_curHeight - targetH) - dampingD * g_velHeight;
     g_velHeight += forceH * dt;
     g_curHeight += g_velHeight * dt;
 
-    // Corner radius smooth match
     g_curRadius = (g_currentState == IslandState::Expanded) ? 22.0f : (g_curHeight * 0.5f);
 
-    // Alpha interpolation
     float forceA = -180.0f * (g_contentAlpha - targetAlpha) - 22.0f * g_velContentAlpha;
     g_velContentAlpha += forceA * dt;
     g_contentAlpha += g_velContentAlpha * dt;
     g_contentAlpha = std::clamp(g_contentAlpha, 0.0f, 1.0f);
 
-    // Hover sheen lerp
     g_hoverAlpha += (targetHover - g_hoverAlpha) * (dt * 12.0f);
 
-    // Music wave phase
     if (g_musicInfo.isPlaying) {
         g_musicWavePhase += dt * 6.0f;
         if (g_musicWavePhase > 6.28318f) g_musicWavePhase -= 6.28318f;
+
+        g_musicInfo.vinylRotation += dt * 45.0f; // Vinyl spins smoothly
+        if (g_musicInfo.vinylRotation > 360.0f) g_musicInfo.vinylRotation -= 360.0f;
+
+        g_musicInfo.elapsedSeconds += dt;
+        if (g_musicInfo.elapsedSeconds > g_musicInfo.totalSeconds) g_musicInfo.elapsedSeconds = 0.0f;
+        g_musicInfo.progress = g_musicInfo.elapsedSeconds / g_musicInfo.totalSeconds;
     }
 
-    // Check convergence
     bool closeW = std::abs(g_curWidth - targetW) < 0.35f && std::abs(g_velWidth) < 0.2f;
     bool closeH = std::abs(g_curHeight - targetH) < 0.35f && std::abs(g_velHeight) < 0.2f;
     bool closeA = std::abs(g_contentAlpha - targetAlpha) < 0.02f && std::abs(g_velContentAlpha) < 0.05f;
@@ -717,7 +844,6 @@ static void StepPhysicsAnimation(float dt) {
         g_velHeight = 0.0f;
         g_velContentAlpha = 0.0f;
 
-        // If not playing music and not hovering, we can stop the render loop
         if (!g_musicInfo.isPlaying && std::abs(g_hoverAlpha - targetHover) < 0.02f) {
             g_hoverAlpha = targetHover;
             g_isAnimating = false;
@@ -755,9 +881,7 @@ static void RenderIsland(HWND hWnd) {
     );
     D2D1_ROUNDED_RECT roundedIsland = D2D1::RoundedRect(islandRect, g_curRadius, g_curRadius);
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 1. SOFT AMBIENT LAYERED DROP SHADOW
-    // ─────────────────────────────────────────────────────────────────────────
     int shadowSteps = g_settings.lowPerfMode ? 2 : 5;
     for (int i = shadowSteps; i >= 1; --i) {
         float expand = (float)i * (g_settings.lowPerfMode ? 2.5f : 1.8f);
@@ -778,9 +902,7 @@ static void RenderIsland(HWND hWnd) {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 2. LIQUID GLASS BASE BODY
-    // ─────────────────────────────────────────────────────────────────────────
     float masterAlpha = g_settings.transparency;
     ID2D1SolidColorBrush* pBaseBrush = NULL;
 
@@ -788,6 +910,8 @@ static void RenderIsland(HWND hWnd) {
         g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.06f, 0.07f, 0.09f, 0.78f * masterAlpha), &pBaseBrush);
     } else if (g_settings.glassStyle == 2) { // Frosted Acrylic
         g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.12f, 0.12f, 0.14f, 0.65f * masterAlpha), &pBaseBrush);
+    } else if (g_settings.glassStyle == 3) { // Porcelain Light
+        g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.92f, 0.94f, 0.98f, 0.70f * masterAlpha), &pBaseBrush);
     } else { // Obsidian Dark
         g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.03f, 0.03f, 0.04f, 0.94f * masterAlpha), &pBaseBrush);
     }
@@ -797,15 +921,13 @@ static void RenderIsland(HWND hWnd) {
         pBaseBrush->Release();
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 3. SPECULAR GLARE (TOP GLASS SHEEN GRADIENT)
-    // ─────────────────────────────────────────────────────────────────────────
     if (g_settings.glassStyle == 1 && !g_settings.lowPerfMode) {
         ID2D1GradientStopCollection* pGlareStops = NULL;
         float hoverBonus = g_hoverAlpha * 0.12f;
         D2D1_GRADIENT_STOP stops[4] = {
-            { 0.00f, D2D1::ColorF(1.0f, 1.0f, 1.0f, (0.32f + hoverBonus) * masterAlpha) },
-            { 0.22f, D2D1::ColorF(1.0f, 1.0f, 1.0f, (0.09f + hoverBonus * 0.5f) * masterAlpha) },
+            { 0.00f, D2D1::ColorF(1.0f, 1.0f, 1.0f, (0.34f + hoverBonus) * masterAlpha) },
+            { 0.22f, D2D1::ColorF(1.0f, 1.0f, 1.0f, (0.10f + hoverBonus * 0.5f) * masterAlpha) },
             { 0.65f, D2D1::ColorF(0.85f, 0.95f, 1.0f, 0.02f * masterAlpha) },
             { 1.00f, D2D1::ColorF(0.0f, 0.0f, 0.0f, 0.10f * masterAlpha) }
         };
@@ -827,12 +949,10 @@ static void RenderIsland(HWND hWnd) {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 4. SPECULAR RIM LIGHT (1PX LIQUID GLASS INNER BORDER)
-    // ─────────────────────────────────────────────────────────────────────────
     {
         ID2D1GradientStopCollection* pRimStops = NULL;
-        float topRimAlpha = (0.60f + g_hoverAlpha * 0.20f) * masterAlpha;
+        float topRimAlpha = (0.65f + g_hoverAlpha * 0.20f) * masterAlpha;
         float botRimAlpha = (0.22f + g_hoverAlpha * 0.10f) * masterAlpha;
 
         D2D1_GRADIENT_STOP rimStopsArr[3] = {
@@ -863,18 +983,34 @@ static void RenderIsland(HWND hWnd) {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 5. CONTENT RENDERING: COMPACT MODE
-    // ─────────────────────────────────────────────────────────────────────────
     if (g_contentAlpha < 0.95f) {
         float compactAlpha = (1.0f - g_contentAlpha);
 
-        // A. Mini Dynamic Icon / Music Equalizer Bars on the left
         float iconLeft = islandRect.left + 14.0f;
         float iconCenterY = (islandRect.top + islandRect.bottom) * 0.5f;
 
-        if (g_musicInfo.isPlaying && g_settings.enableMusic) {
-            // Draw 3 bouncing equalizer bars
+        // Determine left indicator status
+        if (g_downloadInfo.isDownloading && g_settings.enableDownloads) {
+            // Blue pulsing download indicator
+            D2D1_RECT_F dlRect = D2D1::RectF(iconLeft, islandRect.top, iconLeft + 16.0f, islandRect.bottom);
+            ID2D1SolidColorBrush* pDlBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.20f, 0.70f, 1.0f, 0.95f * compactAlpha), &pDlBrush);
+            if (pDlBrush && g_pTextFormatSmall) {
+                g_pDCRenderTarget->DrawTextW(L"⬇", 1, g_pTextFormatSmall, &dlRect, pDlBrush);
+                pDlBrush->Release();
+            }
+        } else if (g_telemetry.hasBattery && g_telemetry.isCharging && g_settings.enableBatteryAlerts) {
+            // Charging battery indicator
+            D2D1_RECT_F batRect = D2D1::RectF(iconLeft, islandRect.top, iconLeft + 16.0f, islandRect.bottom);
+            ID2D1SolidColorBrush* pBatBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.25f, 0.90f, 0.45f, 0.98f * compactAlpha), &pBatBrush);
+            if (pBatBrush && g_pTextFormatSmall) {
+                g_pDCRenderTarget->DrawTextW(L"⚡", 1, g_pTextFormatSmall, &batRect, pBatBrush);
+                pBatBrush->Release();
+            }
+        } else if (g_musicInfo.isPlaying && g_settings.enableMusic) {
+            // 3 Equalizer bars
             for (int b = 0; b < 3; ++b) {
                 float wave = std::sin(g_musicWavePhase + (float)b * 1.5f);
                 float barH = 5.0f + (wave * 0.5f + 0.5f) * 11.0f;
@@ -890,7 +1026,7 @@ static void RenderIsland(HWND hWnd) {
                 }
             }
         } else {
-            // Sleek Glowing Status Dot
+            // Glowing Status Dot
             D2D1_ELLIPSE dot = D2D1::Ellipse(D2D1::Point2F(iconLeft + 6.0f, iconCenterY), 4.5f, 4.5f);
             ID2D1SolidColorBrush* pDotBrush = NULL;
             g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.35f, 0.75f, 1.0f, 0.90f * compactAlpha), &pDotBrush);
@@ -900,11 +1036,21 @@ static void RenderIsland(HWND hWnd) {
             }
         }
 
-        // B. Compact Title / Status Text
+        // Compact Title / Status Text
         if (g_pTextFormatSmall) {
-            std::wstring compText = g_musicInfo.isPlaying ? g_musicInfo.title : L"Dynamic Island";
-            if (compText.length() > 16) {
-                compText = compText.substr(0, 14) + L"...";
+            std::wstring compText;
+            if (g_downloadInfo.isDownloading && g_settings.enableDownloads) {
+                compText = L"Tải: " + g_downloadInfo.fileName;
+            } else if (g_telemetry.hasBattery && g_telemetry.isCharging && g_settings.enableBatteryAlerts) {
+                compText = L"Sạc: " + std::to_wstring(g_telemetry.batteryPercent) + L"%";
+            } else if (g_musicInfo.isPlaying) {
+                compText = g_musicInfo.title;
+            } else {
+                compText = L"Dynamic Island";
+            }
+
+            if (compText.length() > 17) {
+                compText = compText.substr(0, 15) + L"...";
             }
             D2D1_RECT_F textRect = D2D1::RectF(
                 iconLeft + 20.0f, islandRect.top,
@@ -923,22 +1069,18 @@ static void RenderIsland(HWND hWnd) {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
     // 6. CONTENT RENDERING: EXPANDED MODE (FADE IN)
-    // ─────────────────────────────────────────────────────────────────────────
     if (g_contentAlpha > 0.05f) {
         float expAlpha = g_contentAlpha;
 
-        // Top Header: Tabs [Music] [System] [Alerts] & Collapse Button [▲]
         float tabY = islandRect.top + 10.0f;
         float tabH = 22.0f;
 
-        // Tab Pill Buttons
-        const wchar_t* tabNames[] = { L"Âm Nhạc", L"Hệ Thống", L"Thông Báo" };
+        const wchar_t* tabNames[] = { L"Âm Nhạc", L"Hệ Thống", L"Tải Về", L"Thông Báo" };
         float tabX = islandRect.left + 16.0f;
 
-        for (int t = 0; t < 3; ++t) {
-            float tabW = 68.0f;
+        for (int t = 0; t < 4; ++t) {
+            float tabW = 60.0f;
             D2D1_RECT_F tabRect = D2D1::RectF(tabX, tabY, tabX + tabW, tabY + tabH);
             D2D1_ROUNDED_RECT rTab = D2D1::RoundedRect(tabRect, 11.0f, 11.0f);
 
@@ -963,10 +1105,10 @@ static void RenderIsland(HWND hWnd) {
                 g_pDCRenderTarget->DrawTextW(tabNames[t], (UINT32)wcslen(tabNames[t]), g_pTextFormatSmall, &tabRect, pTabText);
                 pTabText->Release();
             }
-            tabX += tabW + 6.0f;
+            tabX += tabW + 5.0f;
         }
 
-        // Collapse Button [▲] on top right
+        // Collapse Button [▲]
         D2D1_RECT_F closeRect = D2D1::RectF(islandRect.right - 36.0f, tabY, islandRect.right - 14.0f, tabY + tabH);
         D2D1_ROUNDED_RECT rClose = D2D1::RoundedRect(closeRect, 11.0f, 11.0f);
         ID2D1SolidColorBrush* pCloseBg = NULL;
@@ -982,42 +1124,49 @@ static void RenderIsland(HWND hWnd) {
             pCloseText->Release();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // TAB CONTENT
-        // ─────────────────────────────────────────────────────────────────────
         float contentTop = tabY + tabH + 12.0f;
 
         if (g_activeTab == ActiveTab::Music) {
             // ── MUSIC VIEW ──
-            // Album Art Box (glossy rounded rectangle on left)
-            float artSize = 64.0f;
-            D2D1_RECT_F artRect = D2D1::RectF(
-                islandRect.left + 18.0f, contentTop + 4.0f,
-                islandRect.left + 18.0f + artSize, contentTop + 4.0f + artSize
-            );
-            D2D1_ROUNDED_RECT rArt = D2D1::RoundedRect(artRect, 14.0f, 14.0f);
+            // Vinyl Record Album Artwork (Glossy with rotating grooves)
+            float artSize = 68.0f;
+            float artLeft = islandRect.left + 18.0f;
+            float artTop = contentTop + 2.0f;
+            D2D1_RECT_F artRect = D2D1::RectF(artLeft, artTop, artLeft + artSize, artTop + artSize);
+            D2D1_ROUNDED_RECT rArt = D2D1::RoundedRect(artRect, 16.0f, 16.0f);
 
-            // Vinyl / Artwork background gradient
+            // Vinyl Base
             ID2D1SolidColorBrush* pArtBrush = NULL;
-            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.18f, 0.22f, 0.28f, 0.88f * expAlpha), &pArtBrush);
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.12f, 0.14f, 0.18f, 0.90f * expAlpha), &pArtBrush);
             if (pArtBrush) {
                 g_pDCRenderTarget->FillRoundedRectangle(&rArt, pArtBrush);
                 pArtBrush->Release();
             }
 
-            // Music note icon inside artwork box
-            ID2D1SolidColorBrush* pNoteBrush = NULL;
-            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.40f, 0.85f, 0.60f, 0.95f * expAlpha), &pNoteBrush);
-            if (pNoteBrush && g_pTextFormatTitle) {
-                g_pDCRenderTarget->DrawTextW(L"♫", 1, g_pTextFormatTitle, &artRect, pNoteBrush);
-                pNoteBrush->Release();
+            // Concentric vinyl disc grooves
+            D2D1_POINT_2F discCenter = D2D1::Point2F(artLeft + artSize * 0.5f, artTop + artSize * 0.5f);
+            ID2D1SolidColorBrush* pGrooveBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1.0f, 1.0f, 1.0f, 0.10f * expAlpha), &pGrooveBrush);
+            if (pGrooveBrush) {
+                g_pDCRenderTarget->DrawEllipse(D2D1::Ellipse(discCenter, 28.0f, 28.0f), pGrooveBrush, 1.0f);
+                g_pDCRenderTarget->DrawEllipse(D2D1::Ellipse(discCenter, 21.0f, 21.0f), pGrooveBrush, 1.0f);
+                g_pDCRenderTarget->DrawEllipse(D2D1::Ellipse(discCenter, 14.0f, 14.0f), pGrooveBrush, 1.0f);
+                pGrooveBrush->Release();
             }
 
-            // Song Title & Artist text
+            // Center spindle label
+            ID2D1SolidColorBrush* pCenterBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.20f, 0.85f, 0.55f, 0.95f * expAlpha), &pCenterBrush);
+            if (pCenterBrush) {
+                g_pDCRenderTarget->FillEllipse(D2D1::Ellipse(discCenter, 8.0f, 8.0f), pCenterBrush);
+                pCenterBrush->Release();
+            }
+
             float infoLeft = artRect.right + 14.0f;
             float infoRight = islandRect.right - 18.0f;
 
-            D2D1_RECT_F titleRect = D2D1::RectF(infoLeft, contentTop, infoRight, contentTop + 22.0f);
+            // Track Title
+            D2D1_RECT_F titleRect = D2D1::RectF(infoLeft, contentTop, infoRight - 40.0f, contentTop + 22.0f);
             ID2D1SolidColorBrush* pTitleBrush = NULL;
             g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1.0f, 1.0f, 1.0f, 0.98f * expAlpha), &pTitleBrush);
             if (pTitleBrush && g_pTextFormatTitle) {
@@ -1028,6 +1177,24 @@ static void RenderIsland(HWND hWnd) {
                 pTitleBrush->Release();
             }
 
+            // 6-Bar Equalizer Waveform beside title
+            float eqLeft = infoRight - 36.0f;
+            for (int b = 0; b < 6; ++b) {
+                float wave = std::sin(g_musicWavePhase + (float)b * 1.05f);
+                float barH = 4.0f + (wave * 0.5f + 0.5f) * 14.0f;
+                float barX = eqLeft + (float)b * 6.0f;
+                D2D1_RECT_F bRect = D2D1::RectF(barX, contentTop + 16.0f - barH, barX + 3.0f, contentTop + 16.0f);
+                D2D1_ROUNDED_RECT rB = D2D1::RoundedRect(bRect, 1.5f, 1.5f);
+
+                ID2D1SolidColorBrush* pEqBrush = NULL;
+                g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.25f, 0.85f, 0.55f, 0.90f * expAlpha), &pEqBrush);
+                if (pEqBrush) {
+                    g_pDCRenderTarget->FillRoundedRectangle(&rB, pEqBrush);
+                    pEqBrush->Release();
+                }
+            }
+
+            // Artist Name
             D2D1_RECT_F artistRect = D2D1::RectF(infoLeft, contentTop + 22.0f, infoRight, contentTop + 38.0f);
             ID2D1SolidColorBrush* pArtistBrush = NULL;
             g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.68f, 0.72f, 0.78f, 0.80f * expAlpha), &pArtistBrush);
@@ -1039,11 +1206,11 @@ static void RenderIsland(HWND hWnd) {
                 pArtistBrush->Release();
             }
 
-            // Interactive Playback Controls: [⏮ Previous] [⏯ Play/Pause] [⏭ Next]
+            // Interactive Playback Controls: [⏮] [⏯] [⏭]
             float btnY = contentTop + 44.0f;
             float btnH = 26.0f;
             float btnW = 34.0f;
-            float ctrX = infoLeft + 8.0f;
+            float ctrX = infoLeft + 4.0f;
 
             const wchar_t* mediaSymbols[] = { L"⏮", L"⏯", L"⏭" };
             for (int m = 0; m < 3; ++m) {
@@ -1066,11 +1233,11 @@ static void RenderIsland(HWND hWnd) {
                 ctrX += btnW + 10.0f;
             }
 
-            // Audio track progress track
+            // Audio track progress track & time stamps
             float barLeft = ctrX + 10.0f;
             float barRight = infoRight - 10.0f;
-            float barY = btnY + 11.0f;
-            if (barRight > barLeft + 20.0f) {
+            float barY = btnY + 9.0f;
+            if (barRight > barLeft + 30.0f) {
                 D2D1_RECT_F trackBg = D2D1::RectF(barLeft, barY, barRight, barY + 4.0f);
                 D2D1_ROUNDED_RECT rTrackBg = D2D1::RoundedRect(trackBg, 2.0f, 2.0f);
                 ID2D1SolidColorBrush* pTrackBgBrush = NULL;
@@ -1080,7 +1247,7 @@ static void RenderIsland(HWND hWnd) {
                     pTrackBgBrush->Release();
                 }
 
-                float fillW = (barRight - barLeft) * g_musicInfo.progress;
+                float fillW = (barRight - barLeft) * std::clamp(g_musicInfo.progress, 0.0f, 1.0f);
                 D2D1_RECT_F trackFill = D2D1::RectF(barLeft, barY, barLeft + fillW, barY + 4.0f);
                 D2D1_ROUNDED_RECT rTrackFill = D2D1::RoundedRect(trackFill, 2.0f, 2.0f);
                 ID2D1SolidColorBrush* pFillBrush = NULL;
@@ -1088,6 +1255,16 @@ static void RenderIsland(HWND hWnd) {
                 if (pFillBrush) {
                     g_pDCRenderTarget->FillRoundedRectangle(&rTrackFill, pFillBrush);
                     pFillBrush->Release();
+                }
+
+                // Time label below progress bar: "01:05 / 03:30"
+                std::wstring timeStr = FormatTimeString(g_musicInfo.elapsedSeconds) + L" / " + FormatTimeString(g_musicInfo.totalSeconds);
+                D2D1_RECT_F timeRect = D2D1::RectF(barLeft, barY + 6.0f, barRight, barY + 18.0f);
+                ID2D1SolidColorBrush* pTimeBrush = NULL;
+                g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.65f, 0.70f, 0.76f, 0.75f * expAlpha), &pTimeBrush);
+                if (pTimeBrush && g_pTextFormatSmall) {
+                    g_pDCRenderTarget->DrawTextW(timeStr.c_str(), (UINT32)timeStr.length(), g_pTextFormatSmall, &timeRect, pTimeBrush);
+                    pTimeBrush->Release();
                 }
             }
         } else if (g_activeTab == ActiveTab::System) {
@@ -1104,7 +1281,7 @@ static void RenderIsland(HWND hWnd) {
             } cards[3] = {
                 { L"CPU", std::to_wstring(g_telemetry.cpuUsagePercent) + L"%", g_telemetry.cpuUsagePercent / 100.0f, D2D1::ColorF(0.20f, 0.70f, 1.0f, 0.90f) },
                 { L"RAM", std::to_wstring(g_telemetry.ramUsagePercent) + L"%", g_telemetry.ramUsagePercent / 100.0f, D2D1::ColorF(0.85f, 0.45f, 1.0f, 0.90f) },
-                { L"PIN", std::to_wstring(g_telemetry.batteryPercent) + L"%", g_telemetry.batteryPercent / 100.0f, D2D1::ColorF(0.30f, 0.88f, 0.50f, 0.90f) }
+                { L"PIN", std::to_wstring(g_telemetry.batteryPercent) + (g_telemetry.isCharging ? L"% ⚡" : L"%"), g_telemetry.batteryPercent / 100.0f, D2D1::ColorF(0.30f, 0.88f, 0.50f, 0.90f) }
             };
 
             for (int c = 0; c < 3; ++c) {
@@ -1137,7 +1314,7 @@ static void RenderIsland(HWND hWnd) {
                     pValBrush->Release();
                 }
 
-                // Mini progress bar at bottom of card
+                // Mini progress bar
                 float pBarY = cardY + cardH - 12.0f;
                 D2D1_RECT_F pBarBg = D2D1::RectF(cX + 8.0f, pBarY, cX + cardW - 8.0f, pBarY + 4.0f);
                 D2D1_ROUNDED_RECT rPBg = D2D1::RoundedRect(pBarBg, 2.0f, 2.0f);
@@ -1159,8 +1336,52 @@ static void RenderIsland(HWND hWnd) {
                     pPFillBrush->Release();
                 }
             }
+        } else if (g_activeTab == ActiveTab::Downloads) {
+            // ── DOWNLOADS VIEW ──
+            float dX = islandRect.left + 20.0f;
+            float dRight = islandRect.right - 20.0f;
+
+            std::wstring dlTitle = g_downloadInfo.isDownloading ? L"Đang tải xuống tệp..." : L"Không có tệp nào đang tải";
+            std::wstring dlSub = g_downloadInfo.isDownloading ? g_downloadInfo.fileName : L"Thư mục Downloads sẵn sàng.";
+
+            D2D1_RECT_F dTitleRect = D2D1::RectF(dX, contentTop + 4.0f, dRight, contentTop + 24.0f);
+            ID2D1SolidColorBrush* pDTitle = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.30f, 0.80f, 1.0f, 0.98f * expAlpha), &pDTitle);
+            if (pDTitle && g_pTextFormatTitle) {
+                g_pDCRenderTarget->DrawTextW(dlTitle.c_str(), (UINT32)dlTitle.length(), g_pTextFormatTitle, &dTitleRect, pDTitle);
+                pDTitle->Release();
+            }
+
+            D2D1_RECT_F dSubRect = D2D1::RectF(dX, contentTop + 26.0f, dRight, contentTop + 44.0f);
+            ID2D1SolidColorBrush* pDSub = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.85f, 0.88f, 0.95f, 0.85f * expAlpha), &pDSub);
+            if (pDSub && g_pTextFormatBody) {
+                g_pDCRenderTarget->DrawTextW(dlSub.c_str(), (UINT32)dlSub.length(), g_pTextFormatBody, &dSubRect, pDSub);
+                pDSub->Release();
+            }
+
+            // Download Animated Progress Bar
+            float barY = contentTop + 48.0f;
+            D2D1_RECT_F dlBarBg = D2D1::RectF(dX, barY, dRight, barY + 6.0f);
+            D2D1_ROUNDED_RECT rDlBarBg = D2D1::RoundedRect(dlBarBg, 3.0f, 3.0f);
+            ID2D1SolidColorBrush* pDlBarBgBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(1.0f, 1.0f, 1.0f, 0.15f * expAlpha), &pDlBarBgBrush);
+            if (pDlBarBgBrush) {
+                g_pDCRenderTarget->FillRoundedRectangle(&rDlBarBg, pDlBarBgBrush);
+                pDlBarBgBrush->Release();
+            }
+
+            float dlFill = g_downloadInfo.isDownloading ? 0.65f : 1.0f;
+            D2D1_RECT_F dlBarFill = D2D1::RectF(dX, barY, dX + (dRight - dX) * dlFill, barY + 6.0f);
+            D2D1_ROUNDED_RECT rDlBarFill = D2D1::RoundedRect(dlBarFill, 3.0f, 3.0f);
+            ID2D1SolidColorBrush* pDlBarFillBrush = NULL;
+            g_pDCRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.20f, 0.70f, 1.0f, 0.90f * expAlpha), &pDlBarFillBrush);
+            if (pDlBarFillBrush) {
+                g_pDCRenderTarget->FillRoundedRectangle(&rDlBarFill, pDlBarFillBrush);
+                pDlBarFillBrush->Release();
+            }
         } else if (g_activeTab == ActiveTab::Alerts) {
-            // ── ALERTS / NOTIFICATIONS VIEW ──
+            // ── ALERTS / CLIPBOARD VIEW ──
             float aX = islandRect.left + 20.0f;
             float aRight = islandRect.right - 20.0f;
 
@@ -1187,9 +1408,7 @@ static void RenderIsland(HWND hWnd) {
 
     g_pDCRenderTarget->EndDraw();
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // COMMIT TO SCREEN VIA ATOMIC UpdateLayeredWindow
-    // ─────────────────────────────────────────────────────────────────────────
+    // 7. COMMIT TO SCREEN VIA ATOMIC UpdateLayeredWindow
     int screenW = GetSystemMetrics(SM_CXSCREEN);
     int posX = (screenW - curW) / 2 - renderPad;
     int posY = g_settings.offsetY - renderPad;
@@ -1210,9 +1429,48 @@ static void RenderIsland(HWND hWnd) {
 static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_CREATE: {
-        SetTimer(hWnd, 1, 16, NULL); // 60 FPS animation/telemetry tick
+        SetTimer(hWnd, 1, 16, NULL);
         InitD2DResources(hWnd);
         ApplyBlurBackdrop(hWnd, g_settings.glassStyle);
+
+        // Register Windows Clipboard listener
+        AddClipboardFormatListener(hWnd);
+        return 0;
+    }
+
+    case WM_CLIPBOARDUPDATE: {
+        if (g_settings.enableClipboard && OpenClipboard(hWnd)) {
+            if (IsClipboardFormatAvailable(CF_UNICODETEXT)) {
+                HANDLE hData = GetClipboardData(CF_UNICODETEXT);
+                if (hData) {
+                    LPCWSTR pText = (LPCWSTR)GlobalLock(hData);
+                    if (pText && wcslen(pText) > 0) {
+                        std::wstring snippet = pText;
+                        while (!snippet.empty() && (snippet.front() == L' ' || snippet.front() == L'\r' || snippet.front() == L'\n' || snippet.front() == L'\t')) {
+                            snippet.erase(snippet.begin());
+                        }
+                        while (!snippet.empty() && (snippet.back() == L' ' || snippet.back() == L'\r' || snippet.back() == L'\n' || snippet.back() == L'\t')) {
+                            snippet.pop_back();
+                        }
+                        std::replace(snippet.begin(), snippet.end(), L'\r', L' ');
+                        std::replace(snippet.begin(), snippet.end(), L'\n', L' ');
+                        if (snippet.length() > 36) {
+                            snippet = snippet.substr(0, 34) + L"...";
+                        }
+                        if (!snippet.empty() && snippet != g_lastClipboardText) {
+                            g_lastClipboardText = snippet;
+                            TriggerNotification(L"Đã sao chép vào Clipboard 📋", snippet, 3);
+                        }
+                    }
+                    GlobalUnlock(hData);
+                }
+            } else if (IsClipboardFormatAvailable(CF_BITMAP) || IsClipboardFormatAvailable(CF_DIB)) {
+                TriggerNotification(L"Đã sao chép hình ảnh 🖼️", L"Hình ảnh đã lưu trong bộ nhớ tạm.", 3);
+            } else if (IsClipboardFormatAvailable(CF_HDROP)) {
+                TriggerNotification(L"Đã sao chép tệp tin 📁", L"Tệp tin đã lưu trong bộ nhớ tạm.", 3);
+            }
+            CloseClipboard();
+        }
         return 0;
     }
 
@@ -1220,13 +1478,12 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
         if (wParam == 1) {
             ULONGLONG now = GetTickCount64();
 
-            // 1. Step animation physics
             StepPhysicsAnimation(0.016f);
 
-            // 2. Periodic background updates (rate-limited)
+            // Periodic background telemetry
             if (now - g_lastTelemetryTick > 1500) {
                 g_lastTelemetryTick = now;
-                if (g_currentState == IslandState::Expanded || g_settings.enableSysMon) {
+                if (g_currentState == IslandState::Expanded || g_settings.enableSysMon || g_settings.enableBatteryAlerts) {
                     UpdateSystemTelemetry();
                 }
             }
@@ -1236,8 +1493,13 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
                     UpdateMediaSession();
                 }
             }
+            if (now - g_lastDownloadCheckTick > 2000) {
+                g_lastDownloadCheckTick = now;
+                if (g_settings.enableDownloads) {
+                    UpdateDownloadsCheck();
+                }
+            }
 
-            // 3. Auto-collapse check after mouse leave or notification expiry
             if (g_activeAlert.hasAlert && now > g_activeAlert.expireTick) {
                 g_activeAlert.hasAlert = false;
                 if (g_currentState == IslandState::Expanded && !g_bIsHovered) {
@@ -1254,12 +1516,10 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
                 }
             }
 
-            // Repaint
             RenderIsland(hWnd);
 
-            // If completely settled and not hovering, we can slow down or sleep timer
-            if (!g_isAnimating && !g_bIsHovered && !g_musicInfo.isPlaying) {
-                SetTimer(hWnd, 1, 100, NULL); // slow poll when idle (zero CPU)
+            if (!g_isAnimating && !g_bIsHovered && !g_musicInfo.isPlaying && !g_downloadInfo.isDownloading) {
+                SetTimer(hWnd, 1, 100, NULL); // Slow idle poll to achieve 0.0% CPU
             }
         }
         return 0;
@@ -1271,20 +1531,18 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
             g_mouseLeaveCollapseTimer = 0;
             g_isAnimating = true;
 
-            // Expand on hover
             g_currentState = IslandState::Expanded;
 
             TRACKMOUSEEVENT tme = { sizeof(TRACKMOUSEEVENT), TME_LEAVE, hWnd, HOVER_DEFAULT };
             TrackMouseEvent(&tme);
 
-            SetTimer(hWnd, 1, 16, NULL); // 60fps responsive animation
+            SetTimer(hWnd, 1, 16, NULL);
         }
         return 0;
     }
 
     case WM_MOUSELEAVE: {
         g_bIsHovered = false;
-        // Schedule auto-collapse
         g_mouseLeaveCollapseTimer = (DWORD)GetTickCount64() + (g_settings.autoCollapseSec * 1000);
         SetTimer(hWnd, 1, 16, NULL);
         return 0;
@@ -1308,23 +1566,23 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
                 return 0;
             }
 
-            // Check Tab clicks: [Music (0..74)] [System (74..148)] [Alerts (148..222)]
+            // Check Tab clicks: [Âm Nhạc] [Hệ Thống] [Tải Về] [Thông Báo]
             float tabX = 16.0f;
-            for (int t = 0; t < 3; ++t) {
-                if (localX >= tabX && localX <= tabX + 68.0f && localY >= 10 && localY <= 32) {
+            for (int t = 0; t < 4; ++t) {
+                if (localX >= tabX && localX <= tabX + 60.0f && localY >= 10 && localY <= 32) {
                     g_activeTab = (ActiveTab)t;
                     g_isAnimating = true;
                     SetTimer(hWnd, 1, 16, NULL);
                     return 0;
                 }
-                tabX += 74.0f;
+                tabX += 65.0f;
             }
 
-            // Check Media control buttons when Music Tab is active
+            // Check Media control buttons
             if (g_activeTab == ActiveTab::Music) {
-                float infoLeft = 18.0f + 64.0f + 14.0f;
+                float infoLeft = 18.0f + 68.0f + 14.0f;
                 float btnY = 10.0f + 22.0f + 12.0f + 44.0f;
-                float ctrX = infoLeft + 8.0f;
+                float ctrX = infoLeft + 4.0f;
 
                 // [⏮ Prev]
                 if (localX >= ctrX && localX <= ctrX + 34.0f && localY >= btnY && localY <= btnY + 26.0f) {
@@ -1345,7 +1603,6 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
                 }
             }
         } else {
-            // Click on compact pill toggles expansion
             g_currentState = IslandState::Expanded;
             g_isAnimating = true;
             SetTimer(hWnd, 1, 16, NULL);
@@ -1355,14 +1612,12 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
     case WM_DISPLAYCHANGE:
     case WM_SETTINGCHANGE: {
-        // Recalculate and reposition
         g_isAnimating = true;
         SetTimer(hWnd, 1, 16, NULL);
         return 0;
     }
 
     case WM_USER + 101: {
-        // Refresh requested
         g_isAnimating = true;
         SetTimer(hWnd, 1, 16, NULL);
         return 0;
@@ -1370,6 +1625,7 @@ static LRESULT CALLBACK IslandWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
     case WM_DESTROY: {
         KillTimer(hWnd, 1);
+        RemoveClipboardFormatListener(hWnd);
         CleanupD2DResources();
         return 0;
     }
@@ -1414,13 +1670,9 @@ static DWORD WINAPI IslandThreadProc(LPVOID lpParam) {
         ShowWindow(g_hIslandWnd, SW_SHOWNOACTIVATE);
         UpdateWindow(g_hIslandWnd);
 
-        // Initial paint
         RenderIsland(g_hIslandWnd);
+        TriggerNotification(L"Dynamic Island Pro v1.1", L"Hiệu ứng Liquid Glass & Clipboard đã kích hoạt!", 4);
 
-        // Trigger welcome notification
-        TriggerNotification(L"Dynamic Island Pro", L"Hiệu ứng Liquid Glass đã kích hoạt thành công!", 4);
-
-        // Window Message Loop
         MSG msg;
         while (g_bRunning && GetMessageW(&msg, NULL, 0, 0)) {
             TranslateMessage(&msg);
@@ -1441,18 +1693,16 @@ static DWORD WINAPI IslandThreadProc(LPVOID lpParam) {
 // WINDHAWK LIFECYCLE HOOKS
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Mod initialization
 BOOL Wh_ModInit() {
-    Wh_Log(L"Dynamic Island Pro: Initializing...");
+    Wh_Log(L"Dynamic Island Pro: Initializing v1.1.0...");
 
-    // Safeguard: Only run in the primary explorer shell process (Shell_TrayWnd)
     HWND hShellTray = FindWindowW(L"Shell_TrayWnd", NULL);
     if (hShellTray) {
         DWORD shellPid = 0;
         GetWindowThreadProcessId(hShellTray, &shellPid);
         if (GetCurrentProcessId() != shellPid) {
             Wh_Log(L"Dynamic Island Pro: Non-shell explorer instance, skipping.");
-            return TRUE; // Do not inject in secondary folder explorer processes
+            return TRUE;
         }
     }
 
@@ -1474,7 +1724,6 @@ BOOL Wh_ModInit() {
     return TRUE;
 }
 
-// Mod uninitialization & full resource cleanup
 void Wh_ModUninit() {
     Wh_Log(L"Dynamic Island Pro: Unloading...");
 
@@ -1495,7 +1744,6 @@ void Wh_ModUninit() {
     Wh_Log(L"Dynamic Island Pro: Unload complete.");
 }
 
-// Mod settings changed callback
 void Wh_ModSettingsChanged() {
     Wh_Log(L"Dynamic Island Pro: Settings updated.");
     LoadModSettings();
